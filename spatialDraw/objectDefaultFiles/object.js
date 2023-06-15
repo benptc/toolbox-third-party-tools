@@ -192,7 +192,8 @@
         spatialObject.serverPort = defaultPort;
 
         spatialObject.socketIoUrl = url;
-        script.src = url + '/objectDefaultFiles/toolsocket.js';
+        // script.src = url + '/objectDefaultFiles/toolsocket.js';
+        script.src = 'objectDefaultFiles/toolsocket.js';
 
         script.addEventListener('load', function() {
             if (realityInterface) {

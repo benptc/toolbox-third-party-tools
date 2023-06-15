@@ -168,7 +168,7 @@
         let defaultPort = '8080';
         if (object.hasOwnProperty('port')) defaultPort = object.port;
 
-        let protocol = 'http:'; // location.protocol;
+        let protocol = location.protocol; // 'http:';
 
         var url = null;
         let urlSplit = null;

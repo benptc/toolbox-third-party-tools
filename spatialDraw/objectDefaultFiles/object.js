@@ -168,10 +168,12 @@
         let defaultPort = '8080';
         if (object.hasOwnProperty('port')) defaultPort = object.port;
 
+        let protocol = 'http:'; // location.protocol;
+
         var url = null;
         let urlSplit = null;
         if (parseInt(Number(defaultPort))) {
-            url = location.protocol + '//' + object.ip + ':' + defaultPort;
+            url = protocol + '//' + object.ip + ':' + defaultPort;
         } else {
             urlSplit = location.pathname.split('/');
             for (let i = 0; i < urlSplit.length; i++) {
@@ -182,8 +184,8 @@
                 }
             }
 
-            url = location.protocol + '//' + object.ip + ':';
-            if (location.protocol === 'https:' || location.protocol === 'wss:') url +=  '' + 443; else url += '' + 80;
+            url = protocol + '//' + object.ip + ':';
+            if (protocol === 'https:' || protocol === 'wss:') url +=  '' + 443; else url += '' + 80;
             if (urlObj.n) url += '/n/' + urlObj.n;
             if (urlObj.i) url += '/i/' + urlObj.i;
             if (urlObj.s) url += '/s/' + urlObj.s;

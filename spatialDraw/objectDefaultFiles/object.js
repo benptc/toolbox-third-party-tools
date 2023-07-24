@@ -311,6 +311,8 @@
             spatialObject.parentLocation = 'https://toolboxedge.net/stable/n/1z2wUnkqtw5hxtIuowHH/s/ZwEtN7s6gaVQwa78Fra9FCueLWSTAizy2ECSZb1w/?world=_WORLD_instantScand1105z87_ij7osch3ze8';
         }
 
+        // 'https://toolboxedge.net:443/n/1z2wUnkqtw5hxtIuowHH/i/rvMRhu5Gqdw7XGKL/s/ZwEtN7s6gaVQwa78Fra9FCueLWSTAizy2ECSZb1w'
+
         // initialize spatialObject for frames and add additional API methods
         if (typeof msgContent.node !== 'undefined') {
 
@@ -838,6 +840,29 @@
 
     SpatialInterface.prototype.injectSocketIoAPI = function() {
         var self = this;
+
+        //         // 'https://toolboxedge.net:443/n/1z2wUnkqtw5hxtIuowHH/i/rvMRhu5Gqdw7XGKL/s/ZwEtN7s6gaVQwa78Fra9FCueLWSTAizy2ECSZb1w'
+        if (spatialObject.socketIoUrl === 'https://toolboxedge.net:443') {
+            // spatialObject.parentLocation = 'https://toolboxedge.net/stable/n/1z2wUnkqtw5hxtIuowHH/s/ZwEtN7s6gaVQwa78Fra9FCueLWSTAizy2ECSZb1w/?world=_WORLD_instantScand1105z87_ij7osch3ze8';
+            if (spatialObject.parentLocation && spatialObject.parentLocation.includes('/n/')) {
+
+                let urlSplit = spatialObject.parentLocation.split('/');
+                for (let i = 0; i < urlSplit.length; i++) {
+                    if (['n', 'i', 's'].includes(urlSplit[i])) {
+                        if (urlSplit[i + 1])
+                            urlObj[urlSplit[i]] = urlSplit[i + 1];
+                        i++;
+                    }
+                }
+
+                // let url = protocol + '//' + object.ip + ':';
+                // if (protocol === 'https:' || protocol === 'wss:') url +=  '' + 443; else url += '' + 80;
+                if (urlObj.n) spatialObject.socketIoUrl += '/n/' + urlObj.n;
+                if (urlObj.i) spatialObject.socketIoUrl += '/i/' + urlObj.i;
+                if (urlObj.s) spatialObject.socketIoUrl += '/s/' + urlObj.s;
+
+            }
+        }
 
         this.ioObject = io.connect(spatialObject.socketIoUrl);
 

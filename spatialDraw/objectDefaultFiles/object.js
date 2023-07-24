@@ -860,11 +860,12 @@
 
                 // let url = protocol + '//' + object.ip + ':';
                 // if (protocol === 'https:' || protocol === 'wss:') url +=  '' + 443; else url += '' + 80;
-                if (urlObj.n) {
-                    spatialObject.socketIoUrl += '/n/' + urlObj.n;
-                    if (!urlObj.i) urlObj.i = 'rvMRhu5Gqdw7XGKL';
+                if (urlObj.n) spatialObject.socketIoUrl += '/n/' + urlObj.n;
+                if (urlObj.i) {
+                    spatialObject.socketIoUrl += '/i/' + urlObj.i;
+                } else if (urlObj.n) {
+                    spatialObject.socketIoUrl += '/i/rvMRhu5Gqdw7XGKL'; // /i/ can be anything, just use a hard-coded uuid
                 }
-                if (urlObj.i) spatialObject.socketIoUrl += '/i/' + urlObj.i;
                 if (urlObj.s) spatialObject.socketIoUrl += '/s/' + urlObj.s;
 
             }

@@ -856,7 +856,7 @@
                 if (urlObj.n) {
                     spatialObject.socketIoUrl += '/n/' + urlObj.n;
                     if (!urlObj.i) {
-                        urlObj.i = 'requiredID'; //'rvMRhu5Gqdw7XGKL';
+                        urlObj.i = 'rvMRhu5Gqdw7XGKL'; //'rvMRhu5Gqdw7XGKL';
                     }
                 }
                 if (urlObj.i) spatialObject.socketIoUrl += '/i/' + urlObj.i;

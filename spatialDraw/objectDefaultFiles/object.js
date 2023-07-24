@@ -302,6 +302,15 @@
             spatialObject.wasToolJustCreated = msgContent.firstInitialization;
         }
 
+        if (typeof msgContent.parentLocation !== 'undefined') {
+            spatialObject.parentLocation = msgContent.parentLocation;
+        }
+
+        let DEBUG = true;
+        if (DEBUG) {
+            spatialObject.parentLocation = 'https://toolboxedge.net/stable/n/1z2wUnkqtw5hxtIuowHH/s/ZwEtN7s6gaVQwa78Fra9FCueLWSTAizy2ECSZb1w/?world=_WORLD_instantScand1105z87_ij7osch3ze8';
+        }
+
         // initialize spatialObject for frames and add additional API methods
         if (typeof msgContent.node !== 'undefined') {
 

@@ -841,7 +841,10 @@
     SpatialInterface.prototype.injectSocketIoAPI = function() {
         var self = this;
 
-        //         // 'https://toolboxedge.net:443/n/1z2wUnkqtw5hxtIuowHH/i/rvMRhu5Gqdw7XGKL/s/ZwEtN7s6gaVQwa78Fra9FCueLWSTAizy2ECSZb1w'
+        // this is how the communication tool correctly formats the spatialObject.socketIoUrl
+        // https://toolboxedge.net:443/n/1z2wUnkqtw5hxtIuowHH/i/rvMRhu5Gqdw7XGKL/s/ZwEtN7s6gaVQwa78Fra9FCueLWSTAizy2ECSZb1w
+
+        // 'https://toolboxedge.net:443/n/1z2wUnkqtw5hxtIuowHH/i/rvMRhu5Gqdw7XGKL/s/ZwEtN7s6gaVQwa78Fra9FCueLWSTAizy2ECSZb1w'
         if (spatialObject.socketIoUrl === 'https://toolboxedge.net:443') {
             // spatialObject.parentLocation = 'https://toolboxedge.net/stable/n/1z2wUnkqtw5hxtIuowHH/s/ZwEtN7s6gaVQwa78Fra9FCueLWSTAizy2ECSZb1w/?world=_WORLD_instantScand1105z87_ij7osch3ze8';
             if (spatialObject.parentLocation && spatialObject.parentLocation.includes('/n/')) {
@@ -858,7 +861,11 @@
                 // let url = protocol + '//' + object.ip + ':';
                 // if (protocol === 'https:' || protocol === 'wss:') url +=  '' + 443; else url += '' + 80;
                 if (urlObj.n) spatialObject.socketIoUrl += '/n/' + urlObj.n;
-                if (urlObj.i) spatialObject.socketIoUrl += '/i/' + urlObj.i;
+                if (urlObj.i) {
+                    spatialObject.socketIoUrl += '/i/' + urlObj.i;
+                } else if (urlObj.n) {
+                    spatialObject.socketIoUrl += '/i/rvMRhu5Gqdw7XGKL'; // /i/ can be anything, just use a hard-coded uuid
+                }
                 if (urlObj.s) spatialObject.socketIoUrl += '/s/' + urlObj.s;
 
             }

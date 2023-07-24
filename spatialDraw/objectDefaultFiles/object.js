@@ -306,14 +306,6 @@
             spatialObject.parentLocation = msgContent.parentLocation;
         }
 
-        let DEBUG = true;
-        if (DEBUG) {
-            spatialObject.parentLocation = 'https://toolboxedge.net/stable/n/Jhvdnp2V7zFDktKX6d9o/s/svPRm9WNsYNm1X5zHgTFvPHczf7FlWGd8GC5s15S/?world=_WORLD_instantScanT6ab0rad_n2yxukoyhp8';
-            // spatialObject.parentLocation = 'https://toolboxedge.net/stable/n/1z2wUnkqtw5hxtIuowHH/s/ZwEtN7s6gaVQwa78Fra9FCueLWSTAizy2ECSZb1w/?world=_WORLD_instantScand1105z87_ij7osch3ze8';
-        }
-
-        // 'https://toolboxedge.net:443/n/1z2wUnkqtw5hxtIuowHH/i/rvMRhu5Gqdw7XGKL/s/ZwEtN7s6gaVQwa78Fra9FCueLWSTAizy2ECSZb1w'
-
         // initialize spatialObject for frames and add additional API methods
         if (typeof msgContent.node !== 'undefined') {
 
@@ -842,12 +834,16 @@
     SpatialInterface.prototype.injectSocketIoAPI = function() {
         var self = this;
 
-        // this is how the communication tool correctly formats the spatialObject.socketIoUrl
-        // https://toolboxedge.net:443/n/1z2wUnkqtw5hxtIuowHH/i/rvMRhu5Gqdw7XGKL/s/ZwEtN7s6gaVQwa78Fra9FCueLWSTAizy2ECSZb1w
+        /**
+         * spatialObject.socketIoUrl should have this format:
+         * https://toolboxedge.net:443/n/:net_id/i/:arbitrary_id/s/:secret
+         * but when tools are loaded from 3rd-party servers, it ends up like:
+         * https://toolboxedge.net:443
+         * In this case, use the parentLocation to add /n/, /i/, and /s/
+         */
 
         if (spatialObject.socketIoUrl === 'https://toolboxedge.net:443') {
             if (spatialObject.parentLocation && spatialObject.parentLocation.includes('/n/')) {
-
                 let urlSplit = spatialObject.parentLocation.split('/');
                 for (let i = 0; i < urlSplit.length; i++) {
                     if (['n', 'i', 's'].includes(urlSplit[i])) {
@@ -857,18 +853,14 @@
                         i++;
                     }
                 }
-
-                // let url = protocol + '//' + object.ip + ':';
-                // if (protocol === 'https:' || protocol === 'wss:') url +=  '' + 443; else url += '' + 80;
                 if (urlObj.n) {
                     spatialObject.socketIoUrl += '/n/' + urlObj.n;
                     if (!urlObj.i) {
-                        urlObj.i = 'rvMRhu5Gqdw7XGKL';
+                        urlObj.i = 'requiredID'; //'rvMRhu5Gqdw7XGKL';
                     }
                 }
                 if (urlObj.i) spatialObject.socketIoUrl += '/i/' + urlObj.i;
                 if (urlObj.s) spatialObject.socketIoUrl += '/s/' + urlObj.s;
-
             }
         }
 

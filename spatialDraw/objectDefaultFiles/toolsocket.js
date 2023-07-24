@@ -678,6 +678,9 @@ class MainIo extends ToolboxUtilities {
         if (url.indexOf("http") === 0) {
             url = url.replace('http', 'ws');
         }
+        if (url.indexOf("https") === 0) {
+            url = url.replace('https', 'wss');
+        }
 
         let getURLData = this.parseUrl(url, this.routeSchema);
         if (getURLData && getURLData.n && !network) {
